@@ -1,160 +1,78 @@
-# Quick Start Guide
+# PromptPal - Quick Start Guide
 
-## Prerequisites
+> AI Content to Image/Video Tool - 浏览器扩展 + Web应用
 
-- Node.js >= 18.0.0
-- npm >= 9.0.0
-- Supabase account (free) or PostgreSQL
-
----
-
-## Option 1: Use Supabase (Recommended - No Installation)
-
-### 1. Create Supabase Project
-
-1. Go to [supabase.com](https://supabase.com) and sign up
-2. Create a new project
-3. Go to **Settings → Database**
-4. Copy the **Connection string** (URI format)
-
-### 2. Configure Environment
+## 🚀 快速开始 (SQLite - 开箱即用)
 
 ```bash
-cd apps/web
-```
-
-Edit `.env.local` with your Supabase credentials:
-
-```env
-# Database (from Supabase Settings → Database)
-DATABASE_URL="postgresql://postgres.[PROJECT-REF]:[PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres"
-
-# NextAuth
-NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="promptpal-dev-secret-key"
-```
-
-### 3. Continue with Step 3 Below
-
----
-
-## Option 2: Use Docker PostgreSQL
-
-### 1. Start PostgreSQL Container
-
-```bash
-docker run -d --name promptpal-postgres \
-  -e POSTGRES_USER=promptpal \
-  -e POSTGRES_PASSWORD=promptpal123 \
-  -e POSTGRES_DB=promptpal \
-  -p 5432:5432 \
-  postgres:15-alpine
-```
-
-### 2. Configure Environment
-
-```env
-DATABASE_URL="postgresql://promptpal:promptpal123@localhost:5432/promptpal"
-NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="promptpal-dev-secret-key"
-```
-
----
-
-## Installation Steps
-
-### 3. Install Dependencies
-
-```bash
+# 1. 进入目录
 cd promptpal
+
+# 2. 安装依赖
 npm install
-```
 
-### 4. Initialize Database
-
-```bash
-# Generate Prisma Client
+# 3. 初始化数据库 (自动创建 SQLite 文件)
 npm run db:generate
-
-# Push schema to database
 npm run db:push
-```
 
-### 5. Start Development
-
-```bash
+# 4. 启动开发服务器
 npm run dev
 ```
 
-Visit http://localhost:3000
+访问 http://localhost:3000
+
+**无需安装数据库！SQLite 会自动创建本地文件。**
 
 ---
 
-## Chrome Extension Setup
-
-1. Open Chrome → `chrome://extensions/`
-2. Enable **Developer mode** (top right)
-3. Click **Load unpacked**
-4. Select `extensions/chrome` folder
-5. Extension icon appears in toolbar
-
----
-
-## Project Structure
+## 项目结构
 
 ```
 promptpal/
 ├── apps/
-│   └── web/                    # Next.js 14 App
-│       ├── app/
-│       │   ├── page.tsx       # Landing page
-│       │   ├── (auth)/        # Login/Register
-│       │   ├── (main)/        # Dashboard
-│       │   └── api/           # API routes
-│       └── components/
-│
+│   └── web/              # Next.js 14 应用
+│       ├── app/          # 页面和 API
+│       └── components/   # React 组件
 ├── packages/
-│   ├── db/                    # Prisma schema
-│   └── config/               # Models & prompts
-│
+│   ├── db/              # Prisma 数据库 (SQLite)
+│   └── config/          # 模型和提示词配置
 └── extensions/
-    └── chrome/                # Browser extension
+    └── chrome/          # Chrome 扩展
 ```
 
----
+## 功能预览
 
-## Configuration
+- **落地页**: http://localhost:3000
+- **登录页**: http://localhost:3000/login
+- **创建页面**: http://localhost:3000/create
 
-### AI APIs (Optional)
+## Chrome 扩展安装
 
+1. 打开 Chrome → `chrome://extensions/`
+2. 开启 **开发者模式**
+3. 点击 **加载已解压的扩展程序**
+4. 选择 `extensions/chrome` 文件夹
+
+## 配置说明
+
+环境变量在 `.env.local` 中，默认使用 SQLite。
+
+如需 PostgreSQL，修改：
 ```env
-# Add to .env.local
-OPENAI_API_KEY="sk-..."
+DATABASE_URL="postgresql://user:pass@localhost:5432/db"
 ```
 
-### Enable OAuth (Optional)
+## 支持的 AI 模型
 
-```env
-GOOGLE_CLIENT_ID="your-id"
-GOOGLE_CLIENT_SECRET="your-secret"
+**图片**: Flux, DALL-E 3, Stable Diffusion, Ideogram
+**视频**: Runway, Veo, Luma
+**LLM**: GPT-4o, Claude 3.5, Gemini 1.5
 
-WECHAT_APP_ID="your-appid"
-WECHAT_APP_SECRET="your-secret"
-```
+## 技术栈
 
----
-
-## Deployment
-
-### Vercel
-
-1. Push to GitHub
-2. Connect to Vercel
-3. Add environment variables
-4. Deploy
-
----
-
-## Support
-
-Open an issue on [GitHub](https://github.com/lxztry/promptpal)
+- Next.js 14 (App Router)
+- TypeScript
+- TailwindCSS
+- Prisma ORM
+- SQLite / PostgreSQL
+- NextAuth.js

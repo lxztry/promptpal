@@ -1,12 +1,12 @@
 import { AuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { PrismaAdapter } from '@auth/prisma-adapter';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { prisma } from '@promptpal/db';
 import bcrypt from 'bcryptjs';
 
 export const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(prisma) as any,
+  adapter: PrismaAdapter(prisma),
   providers: [
     // Google OAuth (可选)
     ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
@@ -61,7 +61,6 @@ export const authOptions: AuthOptions = {
   },
   pages: {
     signIn: '/login',
-    newUser: '/register',
   },
   callbacks: {
     async jwt({ token, user }) {

@@ -2,26 +2,16 @@
   "name": "promptpal",
   "version": "1.0.0",
   "private": true,
-  "description": "AI Content to Image/Video Tool - 浏览器扩展 + Web应用",
-  "workspaces": [
-    "apps/*",
-    "packages/*",
-    "extensions/*"
-  ],
+  "description": "AI Content to Image/Video Tool",
   "scripts": {
-    "dev": "turbo run dev",
-    "build": "turbo run build",
-    "lint": "turbo run lint",
-    "db:generate": "npm run db:generate --workspace=@promptpal/db",
-    "db:push": "npm run db:push --workspace=@promptpal/db",
-    "db:studio": "npm run db:studio --workspace=@promptpal/db"
-  },
-  "devDependencies": {
-    "turbo": "^2.0.0"
+    "dev": "cd apps/web && npm run dev",
+    "build": "cd apps/web && npm run build",
+    "db:generate": "cd apps/web && npm run db:generate",
+    "db:push": "cd apps/web && npm run db:push",
+    "db:studio": "cd apps/web && npm run db:studio"
   },
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
-  },
-  "packageManager": "npm@10.0.0"
+  }
 }

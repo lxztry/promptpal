@@ -16,7 +16,7 @@ import {
   Type,
   Palette,
 } from 'lucide-react';
-import { IMAGE_STYLES, VIDEO_STYLES } from '@promptpal/config';
+import { IMAGE_STYLES, VIDEO_STYLES } from '@/lib/config';
 
 type Mode = 'text' | 'image' | 'video';
 type OutputType = 'image' | 'video';
