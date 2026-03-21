@@ -1,0 +1,201 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 用户模型
+model User {
+  id            String    @id @default(cuid())
+  email         String?   @unique
+  emailVerified DateTime?
+  name          String?
+  image         String?
+  password      String?   // 邮箱登录密码（加密存储）
+  
+  // OAuth 信息
+  provider      String    @default("email") // google, wechat, email
+  providerId    String?   // OAuth 提供商的用户ID
+  
+  // 积分系统
+  credits       Int       @default(10)      // 免费积分
+  totalCredits  Int       @default(10)      // 累计获得积分
+  consumedCredits Int     @default(0)       // 已消耗积分
+
+  // 订阅信息
+  subscription  Subscription?
+  
+  // 关联数据
+  accounts      Account[]
+  sessions      Session[]
+  generations   Generation[]
+  apiKeys       ApiKey[]
+  settings      UserSettings?
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([email])
+  @@index([provider, providerId])
+}
+
+// OAuth 账户
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+// Session
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// 订阅
+model Subscription {
+  id            String    @id @default(cuid())
+  userId        String    @unique
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  plan          String    // free, monthly, yearly
+  status        String    // active, canceled, expired
+  startDate     DateTime  @default(now())
+  expiresAt     DateTime?
+  autoRenew     Boolean   @default(true)
+  
+  // 订阅配额
+  imageQuota    Int       @default(0)      // 月额度
+  videoQuota    Int       @default(0)
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// 生成记录
+model Generation {
+  id            String    @id @default(cuid())
+  userId        String?
+  user          User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  // 生成类型
+  type          String    // image, video, prompt
+  subtype       String?   // flux, dall-e, runway, veo, luma, etc.
+  
+  // 输入输出
+  input         Json      // { text: "...", imageUrl: "...", style: "..." }
+  output        Json?     // { url: "...", seed: "...", ... }
+  
+  // 状态
+  status        String    @default("pending") // pending, processing, completed, failed
+  error         String?   @db.Text
+  
+  // 消耗
+  creditsUsed   Int       @default(1)
+  
+  // 元数据
+  title         String?
+  description   String?   @db.Text
+  metadata      Json?     // 额外信息
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  @@index([userId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+// 用户 API Key
+model ApiKey {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  name          String    // 密钥名称
+  key           String    @unique // 加密存储的密钥
+  model         String    // 关联的模型
+  
+  // 使用统计
+  usedCount     Int       @default(0)
+  lastUsedAt    DateTime?
+  
+  isActive      Boolean   @default(true)
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  @@index([userId])
+}
+
+// 用户设置
+model UserSettings {
+  id            String    @id @default(cuid())
+  userId        String    @unique
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // 偏好设置
+  language      String    @default("zh-CN")  // zh-CN, en
+  theme         String    @default("light")   // light, dark, system
+  
+  // 默认模型
+  defaultImageModel String?  // 默认图片模型
+  defaultVideoModel String?  // 默认视频模型
+  
+  // 通知设置
+  emailNotify   Boolean   @default(true)
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// 验证码
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// 积分记录
+model CreditLog {
+  id            String    @id @default(cuid())
+  userId        String
+  
+  // 变动
+  amount        Int       // 正数增加，负数减少
+  balance       Int       // 变动后余额
+  
+  // 类型
+  type          String    // earn, consume, refund, bonus
+  source        String?   // subscription, purchase, referral, generation
+  
+  // 描述
+  description   String?
+  metadata      Json?
+  
+  createdAt     DateTime  @default(now())
+  
+  @@index([userId])
+  @@index([createdAt])
+}

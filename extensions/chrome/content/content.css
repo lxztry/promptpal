@@ -1,0 +1,7 @@
+/* PromptPal Extension - Content Styles */
+
+/* 可以添加一些可选的样式来增强选中效果 */
+.promptpal-highlight {
+  background-color: rgba(99, 102, 241, 0.2);
+  border-radius: 2px;
+}
