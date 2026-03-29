@@ -66,8 +66,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 // 处理键盘快捷键
-chrome.commands.onCommand.addListener((command) => {
-  if (command === 'open-promptpal') {
-    chrome.action.openPopup();
-  }
-});
+if (chrome.commands) {
+  chrome.commands.onCommand.addListener((command) => {
+    if (command === 'open-promptpal') {
+      chrome.action.openPopup();
+    }
+  });
+}
