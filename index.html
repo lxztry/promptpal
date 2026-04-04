@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PromptPal - AI提示词助手</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 100px;
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 24px;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        /* Card */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Input */
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 16px;
+            border: 2px solid #e8e8e8;
+            border-radius: 12px;
+            font-size: 16px;
+            resize: none;
+            transition: border-color 0.3s;
+        }
+        
+        .textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        /* Category */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .category-btn {
+            padding: 12px 8px;
+            border: 2px solid #e8e8e8;
+            border-radius: 12px;
+            background: white;
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .category-btn.active {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+        
+        .category-btn .icon {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        
+        /* Generate Button */
+        .generate-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        
+        .generate-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .generate-btn:disabled {
+            opacity: 0.6;
+        }
+        
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loading.show {
+            display: block;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e8e8e8;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 12px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Result */
+        .result {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .result.show {
+            display: block;
+        }
+        
+        .result-prompt {
+            background: #f8f8fa;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 16px;
+            word-break: break-all;
+        }
+        
+        .result-negative {
+            background: #fff5f5;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            color: #e53e3e;
+            margin-bottom: 16px;
+        }
+        
+        /* Score */
+        .score-section {
+            margin-bottom: 16px;
+        }
+        
+        .score-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .score-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .score-label {
+            width: 80px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .score-track {
+            flex: 1;
+            height: 8px;
+            background: #e8e8e8;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .score-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .score-value {
+            width: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #667eea;
+            text-align: right;
+        }
+        
+        /* Action Buttons */
+        .action-btns {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        
+        .action-btn {
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .action-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .copy-btn {
+            background: #667eea;
+            color: white;
+        }
+        
+        .share-btn {
+            background: #10b981;
+            color: white;
+        }
+        
+        .retry-btn {
+            background: #f5f5f5;
+            color: #666;
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #333;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 14px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        
+        /* Suggestions */
+        .suggestions {
+            margin-top: 16px;
+            padding: 12px;
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #e8e8e8;
+        }
+        
+        .suggestions-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .suggestions-list {
+            list-style: none;
+        }
+        
+        .suggestions-list li {
+            font-size: 13px;
+            color: #888;
+            padding: 4px 0;
+            padding-left: 16px;
+            position: relative;
+        }
+        
+        .suggestions-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+        }
+        
+        /* History */
+        .history-section {
+            margin-top: 24px;
+        }
+        
+        .history-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .history-clear {
+            font-size: 12px;
+            color: #e53e3e;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .history-item {
+            background: white;
+            padding: 14px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .history-prompt {
+            font-size: 13px;
+            color: #333;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .history-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+        }
+        
+        .history-category {
+            font-size: 11px;
+            background: #f0f0f5;
+            padding: 4px 8px;
+            border-radius: 6px;
+            color: #666;
+        }
+        
+        .history-time {
+            font-size: 11px;
+            color: #999;
+        }
+        
+        /* Empty */
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+        }
+        
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✨ PromptPal</h1>
+            <p>AI 提示词助手 - 移动端</p>
+        </div>
+        
+        <!-- Input Card -->
+        <div class="card">
+            <div class="input-group">
+                <label class="input-label">📝 描述你的图片</label>
+                <textarea class="textarea" id="description" placeholder="例如：一只可爱的猫咪在草地上玩耍"></textarea>
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">🎨 选择类别</label>
+                <div class="category-grid">
+                    <button class="category-btn active" data-category="portrait">
+                        <span class="icon">👤</span>
+                        人像
+                    </button>
+                    <button class="category-btn" data-category="landscape">
+                        <span class="icon">🏞️</span>
+                        风景
+                    </button>
+                    <button class="category-btn" data-category="anime">
+                        <span class="icon">🎭</span>
+                        动漫
+                    </button>
+                    <button class="category-btn" data-category="product">
+                        <span class="icon">📦</span>
+                        产品
+                    </button>
+                    <button class="category-btn" data-category="art">
+                        <span class="icon">🎨</span>
+                        艺术
+                    </button>
+                    <button class="category-btn" data-category="custom">
+                        <span class="icon">✨</span>
+                        自定义
+                    </button>
+                </div>
+            </div>
+            
+            <button class="generate-btn" id="generateBtn">
+                ✨ 生成提示词
+            </button>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>正在生成...</p>
+            </div>
+            
+            <div class="result" id="result">
+                <div class="result-prompt" id="resultPrompt"></div>
+                <div class="result-negative" id="resultNegative" style="display:none;">
+                    <strong>❌ 避免：</strong> <span id="negativeText"></span>
+                </div>
+                
+                <div class="score-section" id="scoreSection">
+                    <div class="score-title">📊 质量评分</div>
+                    <div class="score-bar">
+                        <span class="score-label">清晰度</span>
+                        <div class="score-track"><div class="score-fill" id="clarityFill" style="width:0%"></div></div>
+                        <span class="score-value" id="clarityScore">0</span>
+                    </div>
+                    <div class="score-bar">
+                        <span class="score-label">完整性</span>
+                        <div class="score-track"><div class="score-fill" id="completenessFill" style="width:0%"></div></div>
+                        <span class="score-value" id="completenessScore">0</span>
+                    </div>
+                    <div class="score-bar">
+                        <span class="score-label">创意性</span>
+                        <div class="score-track"><div class="score-fill" id="creativityFill" style="width:0%"></div></div>
+                        <span class="score-value" id="creativityScore">0</span>
+                    </div>
+                    <div class="score-bar">
+                        <span class="score-label">总分</span>
+                        <div class="score-track"><div class="score-fill" id="overallFill" style="width:0%"></div></div>
+                        <span class="score-value" id="overallScore">0</span>
+                    </div>
+                </div>
+                
+                <div class="suggestions" id="suggestions" style="display:none;">
+                    <div class="suggestions-title">💡 优化建议</div>
+                    <ul class="suggestions-list" id="suggestionsList"></ul>
+                </div>
+                
+                <div class="action-btns">
+                    <button class="action-btn copy-btn" id="copyBtn">📋 复制</button>
+                    <button class="action-btn share-btn" id="shareBtn">🔗 分享</button>
+                    <button class="action-btn retry-btn" id="retryBtn">🔄 重试</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- History -->
+        <div class="history-section" id="historySection">
+            <div class="history-title">
+                <span>📜 历史记录</span>
+                <button class="history-clear" id="clearHistory">清空</button>
+            </div>
+            <div id="historyList"></div>
+        </div>
+    </div>
+    
+    <div class="toast" id="toast"></div>
+    
+    <script>
+        // Category Templates
+        const templates = {
+            portrait: {
+                prompt: 'professional portrait photography, {subject}, soft lighting, natural skin tones, shallow depth of field, high quality, detailed, {style}',
+                negative: 'blurry, low quality, distorted features, oversaturated'
+            },
+            landscape: {
+                prompt: 'breathtaking landscape photography, {subject}, golden hour lighting, dramatic clouds, panoramic view, {style}, national geographic style',
+                negative: 'overcast, dull, flat lighting, urban elements, crowd'
+            },
+            anime: {
+                prompt: 'anime style illustration, {subject}, vibrant colors, detailed anime eyes, Studio Ghibli inspired, {style}, high quality anime art',
+                negative: 'realistic, photographic, western cartoon, ugly, low quality'
+            },
+            product: {
+                prompt: 'professional product photography, {subject}, clean background, studio lighting, {style}, commercial quality, high detail',
+                negative: 'cluttered background, amateur, unprofessional lighting, watermark'
+            },
+            art: {
+                prompt: 'digital art illustration, {subject}, vibrant colors, detailed, {style}, artistic style, masterpiece quality',
+                negative: 'photographic, low quality, amateur, stock photo look'
+            },
+            custom: {
+                prompt: '{subject}, high quality, detailed, professional',
+                negative: 'low quality, amateur'
+            }
+        };
+        
+        const styles = [', cinematic lighting, dramatic atmosphere', ', soft natural light, peaceful', ', vibrant colors, detailed composition', ', professional photography style', ', ultra detailed, 4K'];
+        
+        // State
+        let currentCategory = 'portrait';
+        let currentPrompt = '';
+        let history = JSON.parse(localStorage.getItem('promptpal_mobile_history') || '[]');
+        
+        // DOM Elements
+        const descriptionInput = document.getElementById('description');
+        const generateBtn = document.getElementById('generateBtn');
+        const loading = document.getElementById('loading');
+        const result = document.getElementById('result');
+        const resultPrompt = document.getElementById('resultPrompt');
+        const resultNegative = document.getElementById('resultNegative');
+        const negativeText = document.getElementById('negativeText');
+        const copyBtn = document.getElementById('copyBtn');
+        const shareBtn = document.getElementById('shareBtn');
+        const retryBtn = document.getElementById('retryBtn');
+        const toast = document.getElementById('toast');
+        const historyList = document.getElementById('historyList');
+        const clearHistory = document.getElementById('clearHistory');
+        
+        // Category Selection
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.dataset.category;
+            });
+        });
+        
+        // Generate
+        generateBtn.addEventListener('click', generatePrompt);
+        retryBtn.addEventListener('click', generatePrompt);
+        
+        async function generatePrompt() {
+            const description = descriptionInput.value.trim();
+            if (!description) {
+                showToast('请输入描述内容');
+                return;
+            }
+            
+            generateBtn.disabled = true;
+            loading.classList.add('show');
+            result.classList.remove('show');
+            
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            const template = templates[currentCategory];
+            const style = styles[Math.floor(Math.random() * styles.length)];
+            
+            currentPrompt = template.prompt
+                .replace('{subject}', description)
+                .replace('{style}', style);
+            
+            const negative = template.negative;
+            
+            // Score
+            const scores = calculateScore(currentPrompt);
+            
+            // Show result
+            loading.classList.remove('show');
+            resultPrompt.textContent = currentPrompt;
+            resultNegative.style.display = 'block';
+            negativeText.textContent = negative;
+            result.classList.add('show');
+            
+            // Animate scores
+            animateScore('clarity', scores.clarity);
+            animateScore('completeness', scores.completeness);
+            animateScore('creativity', scores.creativity);
+            animateScore('overall', scores.overall);
+            
+            // Suggestions
+            const suggestions = generateSuggestions(currentPrompt);
+            if (suggestions.length > 0) {
+                document.getElementById('suggestions').style.display = 'block';
+                document.getElementById('suggestionsList').innerHTML = suggestions.map(s => `<li>${s}</li>`).join('');
+            }
+            
+            // Save to history
+            saveToHistory(currentPrompt, currentCategory, scores.overall);
+            
+            generateBtn.disabled = false;
+        }
+        
+        function calculateScore(prompt) {
+            let clarity = 60 + Math.random() * 20;
+            let completeness = 50 + Math.random() * 25;
+            let creativity = 55 + Math.random() * 25;
+            
+            if (prompt.includes(',')) completeness += 10;
+            if (prompt.includes('4K') || prompt.includes('8K')) clarity += 10;
+            if (prompt.includes('detailed') || prompt.includes('detailed')) completeness += 10;
+            if (prompt.includes('dramatic') || prompt.includes('cinematic')) creativity += 15;
+            
+            return {
+                clarity: Math.round(clarity),
+                completeness: Math.round(completeness),
+                creativity: Math.round(creativity),
+                overall: Math.round(clarity * 0.4 + completeness * 0.35 + creativity * 0.25)
+            };
+        }
+        
+        function animateScore(type, value) {
+            const fill = document.getElementById(`${type}Fill`);
+            const score = document.getElementById(`${type}Score`);
+            
+            setTimeout(() => {
+                fill.style.width = `${value}%`;
+                score.textContent = value;
+            }, 100);
+        }
+        
+        function generateSuggestions(prompt) {
+            const suggestions = [];
+            if (!prompt.includes('4K') && !prompt.includes('8K')) suggestions.push('添加画质参数如 4K、high quality');
+            if (!prompt.includes('lighting')) suggestions.push('添加光照描述如 soft lighting、dramatic lighting');
+            if (!prompt.includes('style') && !prompt.includes('type')) suggestions.push('指定具体风格如 anime style、realistic');
+            return suggestions;
+        }
+        
+        // Copy
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(currentPrompt).then(() => {
+                showToast('已复制到剪贴板');
+            });
+        });
+        
+        // Share
+        shareBtn.addEventListener('click', () => {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'PromptPal 提示词',
+                    text: currentPrompt
+                });
+            } else {
+                navigator.clipboard.writeText(currentPrompt);
+                showToast('链接已复制');
+            }
+        });
+        
+        // Toast
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+        
+        // History
+        function saveToHistory(prompt, category, score) {
+            const entry = {
+                id: Date.now(),
+                prompt,
+                category,
+                score,
+                time: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
+            };
+            
+            history.unshift(entry);
+            if (history.length > 20) history.pop();
+            
+            localStorage.setItem('promptpal_mobile_history', JSON.stringify(history));
+            renderHistory();
+        }
+        
+        function renderHistory() {
+            if (history.length === 0) {
+                historyList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📜</div>
+                        <p>暂无历史记录</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            historyList.innerHTML = history.map(item => `
+                <div class="history-item" onclick="useHistory('${item.id}')">
+                    <div class="history-prompt">${item.prompt}</div>
+                    <div class="history-meta">
+                        <span class="history-category">${getCategoryName(item.category)}</span>
+                        <span class="history-time">${item.time}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function getCategoryName(cat) {
+            const names = { portrait: '人像', landscape: '风景', anime: '动漫', product: '产品', art: '艺术', custom: '自定义' };
+            return names[cat] || cat;
+        }
+        
+        function useHistory(id) {
+            const item = history.find(h => h.id == id);
+            if (item) {
+                descriptionInput.value = '';
+                currentPrompt = item.prompt;
+                resultPrompt.textContent = item.prompt;
+                result.classList.add('show');
+                
+                const scores = { clarity: 80, completeness: 75, creativity: 70, overall: item.score };
+                animateScore('clarity', scores.clarity);
+                animateScore('completeness', scores.completeness);
+                animateScore('creativity', scores.creativity);
+                animateScore('overall', scores.overall);
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+        
+        clearHistory.addEventListener('click', () => {
+            if (confirm('确定清空所有历史记录？')) {
+                history = [];
+                localStorage.removeItem('promptpal_mobile_history');
+                renderHistory();
+            }
+        });
+        
+        // Init
+        renderHistory();
+    </script>
+</body>
+</html>
