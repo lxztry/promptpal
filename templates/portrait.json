@@ -1,0 +1,63 @@
+{
+  "category": "portrait",
+  "name": "人像模板",
+  "description": "各种人像摄影提示词模板",
+  "templates": [
+    {
+      "id": "portrait-001",
+      "name": "写真风格",
+      "description": "唯美写真风格人像",
+      "prompt": "professional portrait photography, {subject}, soft lighting, shallow depth of field, natural skin tones, {background}, high detail, 8k quality",
+      "negative": "blurry, low quality, distorted features, oversaturated"
+    },
+    {
+      "id": "portrait-002",
+      "name": "证件照",
+      "description": "标准证件照风格",
+      "prompt": "official ID photo, {subject}, plain white/blue background, frontal pose, natural expression, high contrast, sharp focus, passport style",
+      "negative": "background noise, shadows, red-eye, wrinkles"
+    },
+    {
+      "id": "portrait-003",
+      "name": "复古风格",
+      "description": "复古胶片风格人像",
+      "prompt": "vintage film portrait, {subject}, warm color tones, grain texture, 35mm film look, soft focus, nostalgic mood, {background}",
+      "negative": "digital, sharp, modern"
+    },
+    {
+      "id": "portrait-004",
+      "name": "时尚大片",
+      "description": "时尚杂志封面风格",
+      "prompt": "fashion magazine cover, {subject}, dramatic lighting, editorial makeup, high fashion, {pose}, studio backdrop, Vogue style, 85mm lens",
+      "negative": "amateur, snapshot, low production"
+    },
+    {
+      "id": "portrait-005",
+      "name": "黑白肖像",
+      "description": "经典黑白人像",
+      "prompt": "black and white portrait photography, {subject}, high contrast monochrome, dramatic shadows, {mood}, classic portrait style, Leica M6",
+      "negative": "color, oversaturated, noise"
+    },
+    {
+      "id": "portrait-006",
+      "name": "私房风格",
+      "description": "私房摄影风格",
+      "prompt": "intimate portrait, {subject}, soft diffused light, warm tones, indoor setting, {pose}, cinematic composition, 50mm f/1.4",
+      "negative": "harsh lighting, overexposed, flash"
+    },
+    {
+      "id": "portrait-007",
+      "name": "街拍风格",
+      "description": "街头抓拍风格",
+      "prompt": "street portrait, {subject}, candid moment, urban environment, natural light, {expression}, documentary style, 35mm film",
+      "negative": "posed, studio, artificial"
+    },
+    {
+      "id": "portrait-008",
+      "name": "古风人像",
+      "description": "中国古风摄影",
+      "prompt": "traditional Chinese portrait, {subject}, hanfu clothing, classical garden setting, ink wash painting style, elegant pose, delicate features",
+      "negative": "modern, western, casual"
+    }
+  ]
+}

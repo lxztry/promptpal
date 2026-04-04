@@ -1,0 +1,63 @@
+{
+  "category": "anime",
+  "name": "动漫模板",
+  "description": "二次元动漫风格提示词模板",
+  "templates": [
+    {
+      "id": "anime-001",
+      "name": "日系动漫",
+      "description": "典型日本动漫风格",
+      "prompt": "anime style illustration, {character}, {pose}, {expression}, detailed anime eyes, soft shading, vibrant colors, Studio Ghibli inspired, high quality anime art",
+      "negative": "realistic, photographic, western cartoon, ugly, low quality"
+    },
+    {
+      "id": "anime-002",
+      "name": "赛博朋克",
+      "description": "未来科技感动漫",
+      "prompt": "cyberpunk anime, {character}, futuristic city background, neon lights, holographic displays, tech gear, dark atmosphere, rain effects, anime art style",
+      "negative": "natural, daylight, simple, low quality"
+    },
+    {
+      "id": "anime-003",
+      "name": "幻想风格",
+      "description": "奇幻魔法风格",
+      "prompt": "fantasy anime, {character}, magical powers, floating islands, mystical creatures, detailed costume, ethereal lighting, epic scene, anime illustration",
+      "negative": "modern, realistic, mundane, simple background"
+    },
+    {
+      "id": "anime-004",
+      "name": "水彩插画",
+      "description": "水彩手绘风格",
+      "prompt": "watercolor anime illustration, {character}, soft color palette, delicate brush strokes, dreamy atmosphere, paper texture background, artistic style",
+      "negative": "digital hard edges, photographic, overly detailed"
+    },
+    {
+      "id": "anime-005",
+      "name": "机甲战士",
+      "description": "机器人机甲风格",
+      "prompt": "mecha anime, {character} in giant robot suit, detailed mechanical design, cockpit view, battle scene, dramatic lighting, Gundam style mecha",
+      "negative": "realistic soldiers, natural, no mecha"
+    },
+    {
+      "id": "anime-006",
+      "name": "校园日常",
+      "description": "校园生活风格",
+      "prompt": "slice of life anime, {character}, school uniform, classroom setting, sunny day, cherry blossoms, happy expression, warm atmosphere, K-On style",
+      "negative": "dark, mature, action, complex plot"
+    },
+    {
+      "id": "anime-007",
+      "name": "黑暗哥特",
+      "description": "哥特暗黑风格",
+      "prompt": "gothic anime, {character}, dark outfit, Victorian style, haunted mansion, mysterious atmosphere, dramatic shadows, anime gothic art",
+      "negative": "bright, cheerful, simple, cute"
+    },
+    {
+      "id": "anime-008",
+      "name": "古风和风",
+      "description": "日式古典风格",
+      "prompt": "historical anime, {character} in traditional Japanese clothing, samurai or maiko style, bamboo forest, traditional architecture, seasonal setting, elegant pose",
+      "negative": "modern, western, sci-fi, casual"
+    }
+  ]
+}

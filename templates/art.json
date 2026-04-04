@@ -1,0 +1,63 @@
+{
+  "category": "art",
+  "name": "艺术模板",
+  "description": "艺术创作风格提示词模板",
+  "templates": [
+    {
+      "id": "art-001",
+      "name": "油画风格",
+      "description": "古典油画效果",
+      "prompt": "oil painting on canvas, {subject}, classical painting style, Rembrandt lighting, rich textures, dramatic chiaroscuro, museum quality, {art_period} inspiration",
+      "negative": "digital art, flat, cartoon, low quality"
+    },
+    {
+      "id": "art-002",
+      "name": "抽象艺术",
+      "description": "现代抽象画",
+      "prompt": "abstract art composition, {colors} color palette, geometric shapes, expressive brushstrokes, modern abstract painting, canvas texture, contemporary art style",
+      "negative": "realistic, photographic, figurative, simple"
+    },
+    {
+      "id": "art-003",
+      "name": "水墨画",
+      "description": "东方水墨风格",
+      "prompt": "Chinese ink wash painting style, {subject}, traditional Chinese art, minimalist, elegant brushstrokes, rice paper texture, {mood}, classical landscape or figure",
+      "negative": "colorful, western, digital, cartoon"
+    },
+    {
+      "id": "art-004",
+      "name": "插画风格",
+      "description": "商业插画",
+      "prompt": "digital illustration, {subject}, {style} style, detailed vector art, vibrant colors, clean lines, editorial illustration, magazine quality, modern design",
+      "negative": "photographic, realistic, low quality, amateur"
+    },
+    {
+      "id": "art-005",
+      "name": "3D渲染",
+      "description": "3D数字艺术",
+      "prompt": "3D rendered art, {subject}, {material} material, cinematic lighting, octane render, detailed textures, unreal engine, 4K, studio lighting setup",
+      "negative": "2D, flat, low poly, amateur"
+    },
+    {
+      "id": "art-006",
+      "name": "像素艺术",
+      "description": "复古像素画",
+      "prompt": "pixel art, {subject}, retro game style, {palette} color palette, 16-bit era, {resolution}, nostalgic gaming aesthetic, detailed pixel work",
+      "negative": "photorealistic, high resolution, modern 3D"
+    },
+    {
+      "id": "art-007",
+      "name": "浮世绘",
+      "description": "日本浮世绘风格",
+      "prompt": "ukiyo-e style woodblock print, {subject}, traditional Japanese art, bold outlines, flat colors, {season} theme, classic ukiyo-e composition",
+      "negative": "western style, modern, photographic, 3D"
+    },
+    {
+      "id": "art-008",
+      "name": "蒸汽朋克",
+      "description": "维多利亚蒸汽时代",
+      "prompt": "steampunk art, {subject}, Victorian era machinery, brass and copper tones, gears and cogs, airships, {mood}, detailed steampunk aesthetic",
+      "negative": "modern, futuristic, simple, low quality"
+    }
+  ]
+}

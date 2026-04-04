@@ -1,0 +1,63 @@
+{
+  "category": "landscape",
+  "name": "风景模板",
+  "description": "风景摄影提示词模板",
+  "templates": [
+    {
+      "id": "landscape-001",
+      "name": "日出日落",
+      "description": "日出日落绝美风景",
+      "prompt": "breathtaking {time} landscape, golden hour lighting, {terrain}, dramatic clouds, warm color palette, panoramic view, {season}, national geographic style",
+      "negative": "overcast, dull, flat lighting, modern elements"
+    },
+    {
+      "id": "landscape-002",
+      "name": "城市夜景",
+      "description": "城市霓虹夜景",
+      "prompt": "city night skyline, {city}, neon lights, reflections on water, long exposure, light trails, urban atmosphere, cyberpunk aesthetic, 24mm wide angle",
+      "negative": "daytime, empty, dull"
+    },
+    {
+      "id": "landscape-003",
+      "name": "山川湖泊",
+      "description": "自然山水风景",
+      "prompt": "serene mountain lake, {mountain}, crystal clear water, perfect reflection, {vegetation}, golden sunrise mist, peaceful atmosphere, 4K ultra detail",
+      "negative": "pollution, crowd, artificial"
+    },
+    {
+      "id": "landscape-004",
+      "name": "森林秘境",
+      "description": "神秘森林风光",
+      "prompt": "enchanted forest, tall ancient trees, rays of sunlight through canopy, {mood}, {flora}, mystical atmosphere, {lighting}, nature photography",
+      "negative": "urban, destroyed, winter bare"
+    },
+    {
+      "id": "landscape-005",
+      "name": "海景沙滩",
+      "description": "海边风景",
+      "prompt": "{seascape} photography, {beach}, dramatic waves, golden hour, {coastal_elements}, wide angle lens, {weather}, vacation paradise",
+      "negative": "polluted, crowded, industrial"
+    },
+    {
+      "id": "landscape-006",
+      "name": "星空银河",
+      "description": "星空摄影",
+      "prompt": "milky way galaxy night sky, {landscape}, stars constellation, long exposure, no moon, {foreground}, astrophotography, 14mm ultra wide",
+      "negative": "light pollution, daytime, overcast"
+    },
+    {
+      "id": "landscape-007",
+      "name": "建筑地标",
+      "description": "建筑风景",
+      "prompt": "iconic architecture {building}, {city}, golden hour dramatic lighting, {perspective}, clean composition, architectural photography, modern design",
+      "negative": "damaged, cluttered, ugly"
+    },
+    {
+      "id": "landscape-008",
+      "name": "田园风光",
+      "description": "乡村田园风景",
+      "prompt": "rolling countryside hills, {crops}, traditional {architecture}, {season}, peaceful rural landscape, warm afternoon light, pastoral scene",
+      "negative": "industrial, urban sprawl, pollution"
+    }
+  ]
+}

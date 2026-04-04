@@ -1,0 +1,41 @@
+{
+  "categories": [
+    {
+      "id": "portrait",
+      "name": "人像",
+      "icon": "👤",
+      "description": "写真、证件照、肖像等",
+      "count": 8
+    },
+    {
+      "id": "landscape", 
+      "name": "风景",
+      "icon": "🏞️",
+      "description": "自然、城市、建筑等",
+      "count": 8
+    },
+    {
+      "id": "anime",
+      "name": "动漫",
+      "icon": "🎭",
+      "description": "二次元、角色设计等",
+      "count": 8
+    },
+    {
+      "id": "product",
+      "name": "产品",
+      "icon": "📦",
+      "description": "商业摄影、产品设计等",
+      "count": 8
+    },
+    {
+      "id": "art",
+      "name": "艺术",
+      "icon": "🎨",
+      "description": "油画、插画、3D等",
+      "count": 8
+    }
+  ],
+  "totalTemplates": 40,
+  "lastUpdated": "2026-04-04"
+}

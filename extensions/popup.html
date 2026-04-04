@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PromptPal</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      width: 320px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 200px;
+      color: white;
+    }
+    
+    .header {
+      padding: 16px;
+      text-align: center;
+    }
+    
+    .header h1 {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+    
+    .header p {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+    
+    .content {
+      background: white;
+      padding: 16px;
+      border-radius: 12px 12px 0 0;
+      color: #333;
+    }
+    
+    .input-group {
+      margin-bottom: 12px;
+    }
+    
+    .input-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #666;
+    }
+    
+    .input-group textarea,
+    .input-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      resize: none;
+    }
+    
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    
+    .btn:hover {
+      opacity: 0.9;
+    }
+    
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .result {
+      margin-top: 12px;
+      display: none;
+    }
+    
+    .result.show {
+      display: block;
+    }
+    
+    .result textarea {
+      width: 100%;
+      height: 80px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+    
+    .result .copy-btn {
+      background: #10b981;
+    }
+    
+    .shortcuts {
+      margin-top: 12px;
+      font-size: 11px;
+      color: #999;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>✨ PromptPal</h1>
+    <p>AI Prompt Generator</p>
+  </div>
+  
+  <div class="content">
+    <div class="input-group">
+      <label>Describe your image:</label>
+      <textarea id="description" rows="3" placeholder="e.g., a beautiful sunset over the ocean"></textarea>
+    </div>
+    
+    <div class="input-group">
+      <label>Category:</label>
+      <select id="category">
+        <option value="portrait">Portrait</option>
+        <option value="landscape">Landscape</option>
+        <option value="anime">Anime</option>
+        <option value="product">Product</option>
+        <option value="art">Art</option>
+      </select>
+    </div>
+    
+    <button class="btn" id="generate">Generate Prompt</button>
+    
+    <div class="result" id="result">
+      <label>Generated Prompt:</label>
+      <textarea id="output" readonly></textarea>
+      <button class="btn copy-btn" id="copy">Copy to Clipboard</button>
+    </div>
+    
+    <div class="shortcuts">
+      Or select text on any page → Right-click → "Generate AI Prompt"
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

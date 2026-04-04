@@ -1,0 +1,63 @@
+{
+  "category": "product",
+  "name": "产品模板",
+  "description": "商业产品摄影提示词模板",
+  "templates": [
+    {
+      "id": "product-001",
+      "name": "电商主图",
+      "description": "电商平台产品主图",
+      "prompt": "professional e-commerce product photography, {product}, white background, clean minimal style, studio lighting, high contrast, product centered, commercial quality, Amazon product style",
+      "negative": "cluttered background, amateur, unprofessional lighting, watermark"
+    },
+    {
+      "id": "product-002",
+      "name": "生活方式",
+      "description": "产品生活场景图",
+      "prompt": "lifestyle product photography, {product}, {scene}, natural soft lighting, warm tones, magazine editorial style, aspirational mood, lifestyle brand aesthetic",
+      "negative": "clinical, harsh lighting, stock photo look"
+    },
+    {
+      "id": "product-003",
+      "name": "奢侈品",
+      "description": "高端奢侈品牌风格",
+      "prompt": "luxury brand photography, {product}, dramatic lighting, dark moody background, premium feel, high-end fashion magazine style, editorial quality, sophisticated",
+      "negative": "cheap looking, discount, amateur, cluttered"
+    },
+    {
+      "id": "product-004",
+      "name": "美食摄影",
+      "description": "美食产品摄影",
+      "prompt": "food photography, {dish}, top-down angle, styled props, natural lighting, {mood}, food blog style, appetizing colors, 85mm lens bokeh",
+      "negative": "messy, dull, overexposed, fake looking"
+    },
+    {
+      "id": "product-005",
+      "name": "包装设计",
+      "description": "产品包装展示",
+      "prompt": "product packaging design mockup, {product} packaging, {background}, professional presentation, mockup scene, clean design, modern packaging, vector style",
+      "negative": "damaged packaging, messy, unprofessional"
+    },
+    {
+      "id": "product-006",
+      "name": "科技产品",
+      "description": "数码科技产品",
+      "prompt": "tech product photography, {device}, sleek minimal design, studio lighting, dramatic shadows, futuristic feel, Apple style, clean white background option",
+      "negative": "cluttered, messy wires, outdated design"
+    },
+    {
+      "id": "product-007",
+      "name": "服装模特",
+      "description": "服装产品展示",
+      "prompt": "fashion photography, clothing on {model_type}, {pose}, studio or {location}, editorial fashion, {style} style, magazine quality, stylish",
+      "negative": "amateur snapshot, poor lighting, outdated fashion"
+    },
+    {
+      "id": "product-008",
+      "name": "首饰珠宝",
+      "description": "珠宝首饰产品",
+      "prompt": "jewelry photography, {jewelry}, macro lens detail, sparkle highlights, velvet display, luxury feel, clean black/white background, high end catalog style",
+      "negative": "tarnished, damaged, cheap setting, amateur"
+    }
+  ]
+}
